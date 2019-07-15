@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    {% extends "main.html" %}
+    {% block content %}
+    {% include "header.html" %}
+    <h1>Delete {{patron.name}}</h1>
+
+    <p> Are you sure you want to delete this patron? </p>
+
+
+    <div class='flash'>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <strong>{{message}}</strong>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+    </div>
+
+    <h3>Checked Out Books:</h3>
+      {% if books %}
+      <p> You will not be able to delete this patron if they have books checked out.</p>
+      <div class="container col-md-12">
+        <div class='row padding-bottom'>
+          {% for b in books %}
+            <a href='{{url_for('showBook', book_id=b.id)}}'>
+              <div class="col-md-4 book-list">
+                {{b.title}}
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+      {% else %}
+        <p>No books checked out</p>
+      {% endif %}
+
+    <form action='#' method='POST'>
+      <input class="btn" type='submit' value="Delete">
+      <a class='btn' href='{{url_for('showPatron', patron_id=patron.id)}}'>Cancel</a>
+    </form>
+
+
+{% endblock %}
+
+  </body>
+</html>

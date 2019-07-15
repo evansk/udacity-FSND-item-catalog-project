@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    {% extends "main.html" %}
+    {% block content %}
+    {% include "header.html" %}
+
+ <h1>Return {{book.title}}</h1>
+
+    <p>{{patron.name}} is returning {{book.title}}</p>
+
+    <form action='#' method='POST'>
+      <input class="btn" type='submit' value="Return">
+      <a class="btn" href='{{url_for('showBook', book_id=book.id)}}'>Cancel</a>
+    </form>
+
+
+
+{% endblock %}
+  </body>
+</html>

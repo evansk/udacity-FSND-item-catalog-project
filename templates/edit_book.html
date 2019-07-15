@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    {% extends "main.html" %}
+    {% block content %}
+    {% include "header.html" %}
+    <form action='#' method='POST'>
+      <p>Title:</p>
+      <input type='text' size='30' name='title' placeholder='book'>
+      <p>Author:</p>
+      <input type='text' size='30' name='author' placeholder='author'>
+      <p>Genre:</p>
+      <input type='text' size='30' name='genre' placeholder='genre'>
+      <p>Summary:</p>
+      <input type='text' size='30' name='summary' placeholder='summary'>
+      <p></p>
+      <input class='btn' type='submit' value="Edit">
+      <a class='btn' href='{{url_for('showBook', book_id=book.id)}}'>Cancel</a>
+    </form>
+
+
+{% endblock %}
+  </body>
+</html>

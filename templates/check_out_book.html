@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    {% extends "main.html" %}
+    {% block content %}
+    {% include "header.html" %}
+
+    <p> Please select the patron checking out the book: </p>
+
+
+    <form action='#' method='POST'>
+      <select name='patrons_drop_down'>
+        {% for each in patrons %}
+          <option value="{{each.id}}">{{each.name}}</option>
+        {% endfor %}
+      </select>
+      <p></p>
+      <input class='btn' type='submit' value="Check Out">
+      <a class='btn' href='{{url_for('showBook', book_id=book.id)}}'>Cancel</a>
+    </form>
+
+
+{% endblock %}
+
+  </body>
+</html>

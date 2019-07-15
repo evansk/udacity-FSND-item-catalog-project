@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    {% extends "main.html" %}
+    {% block content %}
+    {% include "header.html" %}
+<h1>Edit {{author.name}}</h1>
+
+    <form action='#' method='POST'>
+      <p>Name:</p>
+      <input type='text' size='30' name='name' placeholder='name'>
+      <p></p>
+      <input class="btn" type='submit' value="Edit">
+      <a class="btn" href='{{url_for('showAuthor', author_id=author.id)}}'>Cancel</a>
+    </form>
+
+
+
+{% endblock %}
+  </body>
+</html>

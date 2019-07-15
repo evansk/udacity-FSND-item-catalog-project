@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    {% extends "main.html" %}
+    {% block content %}
+    {% include "header.html" %}
+
+    {% if book.patron_id %}
+      <p>This book must be returned before it can be deleted from the system.</p>
+    {% endif %}
+
+    <form action='#' method='POST'>
+      <input class="btn" type='submit' value="Delete">
+      <a class="btn" href='{{url_for('showBook', book_id=book.id)}}'>Cancel</a>
+    </form>
+
+
+
+{% endblock %}
+  </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    {% extends "main.html" %}
+    {% block content %}
+    {% include "header.html" %}
+ <h1>Patrons</h1>
+ <div class='container col-md-12'>
+   <div class="row">
+     <div class="col-md-2">
+       <a href='{{url_for('addPatron')}}'>
+         <button class="btn btn-default" id="new-patron">
+           <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Add New Patron
+         </button>
+       </a>
+     </div>
+     <div class="col-md-2 text-right">
+       <div class='flash'>
+           {% with messages = get_flashed_messages() %}
+             {% if messages %}
+               {% for message in messages %}
+                 <strong>{{message}}</strong>
+               {% endfor %}
+             {% endif %}
+           {% endwith %}
+         </div>
+       </div>
+     </div>
+   </div>
+
+   <p></p>
+
+   <div class="container col-md-12">
+     <div class='row padding-top'>
+       {% for p in patrons %}
+         <a href='{{url_for('showPatron', patron_id=p.id)}}'>
+           <div class="col-md-4 book-list">
+             {{p.name}}
+           </div>
+         </a>
+       {% endfor %}
+     </div>
+   </div>
+
+
+{% endblock %}
+  </body>
+</html>

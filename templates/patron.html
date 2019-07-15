@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    {% extends "main.html" %}
+    {% block content %}
+    {% include "header.html" %}
+<h1>{{patron.name}}</h1>
+<div class='container col-md-12'>
+  <div class="row">
+    <div class="col-md-2 text-right">
+      <div class='flash'>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <strong>{{message}}</strong>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+      </div>
+    </div>
+  </div>
+</div>
+    <h3>Email:</h3>
+    <p>{{patron.email}}
+
+    <h3>Checked Out Books:</h3>
+      {% if books %}
+      <div class="container col-md-12">
+        <div class='row padding-top'>
+          {% for b in books %}
+            <a href='{{url_for('showBook', book_id=b.id)}}'>
+              <div class="col-md-4 book-list">
+                {{b.title}}
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+      {% else %}
+        <p>No books checked out</p>
+      {% endif %}
+
+
+      <div class="container col-md-12">
+        <div class="row padding-top">
+          <div class="col-md-2">
+            <a href='{{url_for('editPatron', patron_id=patron.id)}}' class="btn">
+              <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Edit
+            </a>
+          </div>
+          <div class="col-md-2">
+            <a href='{{url_for('deletePatron', patron_id=patron.id)}}' class="btn">
+              <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Delete
+            </a>
+          </div>
+        </div>
+      </div>
+
+{% endblock %}
+  </body>
+</html>

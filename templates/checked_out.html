@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    {% extends "main.html" %}
+    {% block content %}
+    {% include "header.html" %}
+    <h1>List of Checked Out Books</h1>
+
+
+    <div class="container col-md-12">
+      <div class='row'>
+        <div class="col-md-6 padding-bottom">
+          Books:
+        </div>
+        <div class="col-md-6 padding-bottom">
+          Patrons:
+        </div>
+      </div>
+      <div class='row'>
+        {% for b in books %}
+          <a href='{{url_for('showBook', book_id=b.id)}}'>
+            <div class="col-md-6 book-list">
+              {{b.title}}
+            </div>
+          </a>
+          <a href='{{url_for('showPatron', patron_id=b.patron_id)}}'>
+            <div class="col-md-6 book-list">
+              {{b.name}}
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% for b in books %}
+
+    <div>
+      <p><a href='{{url_for('showBook', book_id=b.id)}}'>{{b.title}}</a> - <a href='{{url_for('showPatron', patron_id=b.patron_id)}}'>{{b.name}}</a></p>
+    <div>
+
+    {% endfor %}
+{% endblock %}
+  </body>
+</html>

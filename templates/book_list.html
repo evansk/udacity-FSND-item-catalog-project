@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+<h1>Books</h1>
+
+<div class='container col-md-12'>
+  <div class="row">
+    <div class="col-md-2">
+      <a href='{{url_for('addBook')}}'>
+        <button class="btn btn-default" id="new-book">
+          <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Add New Book
+        </button>
+      </a>
+    </div>
+    <div class="col-md-2 text-right">
+      <div class='flash'>
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              {% for message in messages %}
+                <strong>{{message}}</strong>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p></p>
+
+  <div class="container col-md-12">
+    <div class='row padding-top'>
+      {% for b in books %}
+        <a href='{{url_for('showBook', book_id=b.id)}}'>
+          <div class="col-md-4 book-list">
+            {{b.title}}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+{% endblock %}
+
+  </body>
+</html>

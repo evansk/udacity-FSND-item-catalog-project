@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    {% extends "main.html" %}
+    {% block content %}
+    {% include "header.html" %}
+    <h1>New Patron</h1>
+
+    <form action="#" method='POST'>
+      <p>Name:</p>
+      <input type='text' size='30' name='name' placeholder='Patron Name'>
+      <p>Email:</p>
+      <input type='text' size='30' name='email' placeholder='Patron Email'>
+      <p></p>
+      <input class="btn" type='submit' value="Create">
+      <a class="btn" href='{{url_for('showPatronList')}}'>Cancel</a>
+    </form>
+
+
+{% endblock %}
+
+  </body>
+</html>

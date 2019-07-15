@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    {% extends "main.html" %}
+    {% block content %}
+    {% include "header.html" %}
+
+
+    <div class='flash'>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <strong>{{message}}</strong>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+      </div>
+
+   <h1>{{book.title}}</h1>
+
+
+    {% if author %}
+      <h3> Author:</h3>
+      <p>{{author.name}}</p>
+    {% else %}
+      <p>Error</p>
+    {% endif %}
+
+    {% if genre %}
+      <h3> Genre: </h3>
+      <p>{{genre.name}}</p>
+    {% else %}
+      <p>Error</p>
+    {% endif %}
+
+    <h3> Summary: </h3>
+    <p>{{book.summary}}<p>
+
+    <h3> Checked out by: </h3>
+
+    {% if patron %}
+      <p>{{patron.name}}</p>
+    {% else %}
+      <p>No one</p>
+    {% endif %}
+
+
+    <div class="container col-md-12">
+      <div class="row">
+        <div class="col-md-2">
+          <a href='{{url_for('editBook', book_id=book.id)}}' class="btn">
+            <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Edit
+          </a>
+        </div>
+        <div class="col-md-2">
+          <a href='{{url_for('deleteBook', book_id=book.id)}}' class="btn">
+            <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Delete
+          </a>
+        </div>
+        <div class="col-md-2">
+          {% if patron.id %}
+            <a href='{{url_for('returnBook', book_id=book.id)}}' class="btn">
+              <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Return
+            </a>
+          {% else %}
+            <a href='{{url_for('checkOutBook', book_id=book.id)}}' class="btn">
+              <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Check Out
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+
+    {% endblock %}
+
+  </body>
+</html>
