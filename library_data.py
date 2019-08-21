@@ -11,15 +11,15 @@ DBSession = sessionmaker(bind=engine)
 
 session = DBSession()
 
-patron1 = Patrons(name='Duncan Kraus')
+patron1 = Patrons(name='Duncan Kraus', email='dkraus@email.com')
 session.add(patron1)
 session.commit()
 
-patron2 = Patrons(name='Beatrice Beran')
+patron2 = Patrons(name='Beatrice Beran', email='bberan@email.com')
 session.add(patron2)
 session.commit()
 
-patron3 = Patrons(name='Lex Killough')
+patron3 = Patrons(name='Lex Killough', email='lkillough@email.com')
 session.add(patron3)
 session.commit()
 
