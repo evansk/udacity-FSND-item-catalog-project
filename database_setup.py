@@ -32,6 +32,7 @@ class Authors(Base):
     id = Column(Integer, primary_key = True)
     name = Column(String(80), nullable = False)
     book_count = Column(Integer, nullable = False)
+    owner_id = Column(String(250), nullable = False)
 
     @property
     def serialize(self):
@@ -66,6 +67,7 @@ class Books(Base):
     authors = relationship(Authors)
     patron_id = Column(Integer, ForeignKey('patrons.id'))
     patrons = relationship(Patrons)
+    owner_id = Column(String(250), nullable = False)
 
 
     @property
@@ -79,6 +81,7 @@ class Books(Base):
             'author_id': self.author_id,
             'patron_id': self.patron_id,
         }
+
 
 
 engine = create_engine('sqlite:///librarycatalog.db')

@@ -446,6 +446,11 @@ def deletePatron(patron_id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     patron = session.query(Patrons).filter_by(id=patron_id).one()
+
+    if patron.email != login_session['email']:
+        flash('Unauthorized: Only patrons may edit their own profile.')
+        return redirect(url_for('showPatron', patron_id=patron_id))
+
     books = session.query(Books).filter_by(patron_id=patron_id).all()
     if request.method == 'POST':
         if books:
@@ -467,9 +472,15 @@ def editAuthor(author_id):
     '''Edits author data if the user is logged in'''
     if loginCheck():
         return redirect('/login')
+
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     editedAuthor = session.query(Authors).filter_by(id=author_id).one()
+
+    if editedAuthor.owner_id != login_session['username']:
+        flash('Unauthorized: Only authorized users may edit')
+        return redirect(url_for('showAuthor', author_id=author_id))
+
     if request.method == 'POST':
         if request.form['name']:
             editedAuthor.name = request.form['name']
@@ -497,7 +508,7 @@ def authorCheck(author_name):
     if author_id:
         return author_id
     else:
-        newAuthor = Authors(name=author_name, book_count=1)
+        newAuthor = Authors(name=author_name, book_count=1, owner_id=login_session['username'])
         session.add(newAuthor)
         session.flush()
         author_id = newAuthor.id
@@ -542,7 +553,8 @@ def addBook():
         newBook = Books(title=request.form['title'],
                         genre_id=genre_id,
                         summary=request.form['summary'],
-                        author_id=author_id)
+                        author_id=author_id,
+                        owner_id=login_session['username'])
         session.add(newBook)
         session.commit()
         flash("New Book Added")
@@ -559,6 +571,11 @@ def editBook(book_id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     editedBook = session.query(Books).filter_by(id=book_id).one()
+
+    if editedBook.owner_id != login_session['username']:
+        flash('Unauthorized: Only authorized users may edit')
+        return redirect(url_for('showBook', book_id=book_id))
+
     if request.method == 'POST':
         if request.form['title']:
             editedBook.title = request.form['title']
@@ -587,6 +604,11 @@ def deleteBook(book_id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     book = session.query(Books).filter_by(id=book_id).one()
+
+    if book.owner_id != login_session['username']:
+        flash('Unauthorized: Only authorized users may delete')
+        return redirect(url_for('showBook', book_id=book_id))
+
     if request.method == 'POST':
         if book.patron_id:
             flash("This book must first be returned to the library.")
